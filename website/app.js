@@ -1,7 +1,15 @@
 /* Global Variables */
 // API variables
 let APIUrl = 'https://api.openweathermap.org/data/2.5/weather?zip=';
-let APIKey = '&appid=9ed668acd45eacfbaf23b34e584a7448';
+const APIKey = '&appid=9ed668acd45eacfbaf23b34e584a7448';
+
+// Units of measurement
+/* standard, metric, imperial. 
+When you do not use the units parameter,
+format is standard by default */
+let tempUnit = '';
+let FUnit = document.getElementById('Fahrenheit');
+console.log(FUnit);
 // DOM variables
 let generateBtn = document.querySelector('#generate'),
     zipValue = document.querySelector('#zip'),
@@ -22,8 +30,14 @@ generateBtn.addEventListener('click', (e) => {
     const newZip = zipValue.value;
     const newFeelings = feelingsValue.value;
 
+    // Temperature unit
+    if (FUnit.checked) {
+        tempUnit = '&units=imperial';
+    } else {
+        tempUnit = '&units=metric';
+    }
     // Function to get weather
-    getWeather(APIUrl, newZip, APIKey) // Send data to server from API
+    getWeather(APIUrl, newZip, APIKey, tempUnit) // Send data to server from API
 
         // After data comes
         .then(function (data) {
@@ -51,8 +65,8 @@ generateBtn.addEventListener('click', (e) => {
 });
 
 /// Function to get weather from API
-const getWeather = async (APIUrl, newZip, APIKey) => {
-    const req = await fetch (APIUrl + newZip + APIKey);
+const getWeather = async (APIUrl, newZip, APIKey, tempUnit) => {
+    const req = await fetch (APIUrl + newZip + APIKey + tempUnit);
     try {
         const reqData = await req.json();
         return reqData;
@@ -93,9 +107,18 @@ const updateUi = async () => {
         const allData = await request.json();
         console.log('Geted data');
         console.log(allData);
+
+        // Temperature unit
+        let unitName = '';
+        if (FUnit.checked) {
+            unitName = '°F';
+        } else {
+            unitName = '°C';
+        }
+
         // put data in its containers
         dateDiv.innerHTML = 'Date : ' + '<span>' + allData.date + '</span>';
-        tempDiv.innerHTML = 'Temperature : ' + '<span>' + allData.temperature + '</span>';
+        tempDiv.innerHTML = 'Temperature : ' + '<span>' + allData.temperature + ' ' + unitName + '</span>';
         contentDiv.innerHTML = 'Feelings : ' + '<span>' + allData.userResponse + '</span>';
 
     } catch(error) {

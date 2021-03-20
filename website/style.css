@@ -46,6 +46,29 @@ div span {
     padding-bottom: 30px;
 }
 
+.units {
+    display: flex;
+    justify-content: space-between;
+    background: orange;
+    margin: 10px auto;
+    width: 90%;
+    padding: 10px 20px;
+    font-size: 0.75em;
+}
+
+.unit {
+    display: flex;
+    align-items: center;
+}
+
+input[type="radio"] {
+    cursor: pointer;
+    width: 1.5em;
+    margin: 0 10px;
+}
+    
+
+
 .holder{
     width: 100%;
     display: flex;
@@ -78,7 +101,6 @@ div span {
 .title{
     font-size: 1.5em;
     text-align: center;
-    padding: 30px 0 0 ;
 }
 
 /*  Basic Styling To Override Default For Basic HTML Elements */
